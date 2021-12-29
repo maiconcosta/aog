@@ -11,6 +11,8 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  Color _color = Colors.green;
+
   var _busy = false;
   var _completed = false;
   var _resultText = "Compensa utilizar álcool";
@@ -23,21 +25,25 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Theme.of(context).primaryColor,
-        body: ListView(
-          children: <Widget>[
-            const Logo(),
-            _completed
-                ? Success(
-                    result: _resultText,
-                    reset: reset,
-                  )
-                : SubmitForm(
-                    busy: _busy,
-                    submitFunc: calculate,
-                    alcCtrl: _alcCtrl,
-                    gasCtrl: _gasCtrl,
-                  ),
-          ],
+        body: AnimatedContainer(
+          duration: const Duration(milliseconds: 1200),
+          color: _color,
+          child: ListView(
+            children: <Widget>[
+              const Logo(),
+              _completed
+                  ? Success(
+                      result: _resultText,
+                      reset: reset,
+                    )
+                  : SubmitForm(
+                      busy: _busy,
+                      submitFunc: calculate,
+                      alcCtrl: _alcCtrl,
+                      gasCtrl: _gasCtrl,
+                    ),
+            ],
+          ),
         ));
   }
 
@@ -51,6 +57,7 @@ class _HomePageState extends State<HomePage> {
     double res = alc / gas;
 
     setState(() {
+      _color = Colors.lightGreen;
       _completed = false;
       _busy = true;
     });
@@ -75,6 +82,7 @@ class _HomePageState extends State<HomePage> {
       _gasCtrl = TextEditingController(text: 'R\$ 0,00');
       _completed = false;
       _busy = false;
+      _color = Colors.green;
     });
   }
 }
