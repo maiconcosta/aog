@@ -4,10 +4,12 @@ import 'package:flutter/services.dart';
 
 class Input extends StatelessWidget {
   final String label;
+  final TextEditingController? ctrl;
 
   const Input({
     Key? key,
     required this.label,
+    required this.ctrl,
   }) : super(key: key);
 
   @override
@@ -31,6 +33,7 @@ class Input extends StatelessWidget {
         ),
         Expanded(
           child: TextFormField(
+              controller: ctrl,
               inputFormatters: [
                 FilteringTextInputFormatter.digitsOnly,
                 CentavosInputFormatter(moeda: true),
